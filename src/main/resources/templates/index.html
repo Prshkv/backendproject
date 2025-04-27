@@ -11,12 +11,13 @@
         <div class="container">
             <a class="navbar-brand" href="/">Exploit Database</a>
             
-            <div sec:authorize="hasRole('USER')">
+            <div sec:authorize="isAuthenticated()">
                 <span class="text-light me-3">Welcome, <span th:text="${#authentication.name}"></span></span>
                 <form th:action="@{/logout}" method="post" class="d-inline">
                     <button type="submit" class="btn btn-danger">Sign Out</button>
                 </form>
             </div>
+            
             <div sec:authorize="isAnonymous()">
                 <a href="/login" class="btn btn-outline-light">Login</a>
             </div>
@@ -26,7 +27,7 @@
     <div class="container mt-4">
         <h2 class="mb-3">Exploits</h2>
 
-        <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
+        <div sec:authorize="isAuthenticated()">
             <div class="mb-3">
                 <a href="/addexploit" class="btn btn-success">Post exploit</a>
                 
@@ -45,7 +46,9 @@
                     <th>Type</th>
                     <th>Platform</th>
                     <th>Author</th>
-                    <th sec:authorize="hasAnyRole('USER', 'ADMIN')">Actions</th>
+                    <div sec:authorize="isAuthenticated()">
+                        <th>Actions</th>
+                    </div>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +59,7 @@
                     <td th:text="${exploit.platform.platformName}"></td>
                     <td th:text="${exploit.author}"></td>
                     <td>
-                        <div sec:authorize="hasRole('ADMIN') or #authentication.name == exploit.author">
+                        <div>
                             <a th:href="@{'/editexploit/' + ${exploit.id}}" class="btn btn-sm btn-primary">Edit</a>
                             <form th:action="@{'/delete-exploit/' + ${exploit.id}}" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
