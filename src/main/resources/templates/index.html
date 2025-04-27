@@ -11,13 +11,12 @@
         <div class="container">
             <a class="navbar-brand" href="/">Exploit Database</a>
             
-            <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
+            <div sec:authorize="hasRole('USER')">
                 <span class="text-light me-3">Welcome, <span th:text="${#authentication.name}"></span></span>
                 <form th:action="@{/logout}" method="post" class="d-inline">
                     <button type="submit" class="btn btn-danger">Sign Out</button>
                 </form>
             </div>
-            
             <div sec:authorize="isAnonymous()">
                 <a href="/login" class="btn btn-outline-light">Login</a>
             </div>
@@ -46,9 +45,7 @@
                     <th>Type</th>
                     <th>Platform</th>
                     <th>Author</th>
-                    <div sec:authorize="hasAnyRole('USER', 'ADMIN')">
-                        <th>Actions</th>
-                    </div>
+                    <th sec:authorize="hasAnyRole('USER', 'ADMIN')">Actions</th>
                 </tr>
             </thead>
             <tbody>
