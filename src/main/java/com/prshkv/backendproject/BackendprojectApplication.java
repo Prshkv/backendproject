@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.prshkv.backendproject.domain.AppUserRepository;
+import com.prshkv.backendproject.domain.ExploitRepository;
+import com.prshkv.backendproject.domain.ExploitTypeRepository;
+import com.prshkv.backendproject.domain.PlatformRepository;
 
 @SpringBootApplication
 public class BackendprojectApplication {
@@ -16,9 +19,10 @@ public class BackendprojectApplication {
 	}
 
 	@Bean
-	public CommandLineRunner cml(AppUserRepository appUserRepository) {
+	public CommandLineRunner cml(AppUserRepository appUserRepository, ExploitRepository exploitRepository, ExploitTypeRepository exploitTypeRepository, PlatformRepository platformRepository) {
 		return (args) -> {
 			
+			platformRepository.deleteAll();
 
 		};
 	}
