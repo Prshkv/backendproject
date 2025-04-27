@@ -59,7 +59,7 @@
                     <td th:text="${exploit.platform.platformName}"></td>
                     <td th:text="${exploit.author}"></td>
                     <td>
-                        <div>
+                        <div sec:authorize="isAuthenticated()">
                             <a th:href="@{'/editexploit/' + ${exploit.id}}" class="btn btn-sm btn-primary">Edit</a>
                             <form th:action="@{'/delete-exploit/' + ${exploit.id}}" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-sm btn-danger">Delete</button>
