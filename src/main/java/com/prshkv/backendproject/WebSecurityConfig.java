@@ -1,4 +1,3 @@
-
 package com.prshkv.backendproject;
 
 import org.springframework.context.annotation.Bean;
@@ -29,6 +28,8 @@ public class WebSecurityConfig {
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/exploit/**").permitAll()
+                .requestMatchers("addPlatform").hasRole("ADMIN")
+                .requestMatchers("addType").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(formlogin -> formlogin
