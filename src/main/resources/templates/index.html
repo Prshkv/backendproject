@@ -53,8 +53,8 @@
                 <tr th:each="exploit : ${exploits}">
                     <td><a th:href="@{'/exploit/' + ${exploit.id}}" th:text="${exploit.title}"></a></td>
                     <td th:text="${exploit.date}"></td>
-                    <td th:text="${exploit.type.typeName}"></td>
-                    <td th:text="${exploit.platform.platformName}"></td>
+                    <td th:text="${exploit.type != null ? exploit.type.typeName : 'N/A'}"></td>
+                    <td th:text="${exploit.platform != null ? exploit.platform.platformName : 'N/A'}"></td>
                     <td th:text="${exploit.author}"></td>
                     <td>
                         <div sec:authorize="hasRole('ADMIN') or #authentication.name == exploit.author">
