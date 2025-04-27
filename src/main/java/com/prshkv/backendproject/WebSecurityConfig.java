@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/signup").permitAll()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/exploit/**").permitAll()
+                .requestMatchers("/saveuser").permitAll()
                 .requestMatchers("addPlatform").hasRole("ADMIN")
                 .requestMatchers("addType").hasRole("ADMIN")
                 .anyRequest().authenticated()
