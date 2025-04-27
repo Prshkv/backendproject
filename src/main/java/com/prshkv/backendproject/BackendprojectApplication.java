@@ -22,6 +22,7 @@ public class BackendprojectApplication {
 	public CommandLineRunner cml(AppUserRepository appUserRepository, ExploitRepository exploitRepository, ExploitTypeRepository exploitTypeRepository, PlatformRepository platformRepository) {
 		return (args) -> {
 			
+			
 			platformRepository.deleteAll();
 
 		};
