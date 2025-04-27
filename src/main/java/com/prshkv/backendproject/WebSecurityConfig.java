@@ -25,7 +25,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authorize -> authorize
-                .anyRequest().permitAll()
+                .requestMatchers("/login").permitAll()
+                .requestMatchers("/signup").permitAll()
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/exploit/**").permitAll()
+                .anyRequest().authenticated()
             )
             .formLogin(formlogin -> formlogin
             .loginPage("/login")
@@ -33,7 +37,7 @@ public class WebSecurityConfig {
             .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/")
                 .permitAll()
             );
 

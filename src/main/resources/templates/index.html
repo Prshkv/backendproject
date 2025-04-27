@@ -10,36 +10,57 @@
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">Exploit Database</a>
-            <a href="/login" class="btn btn-outline-light">Login</a>
+            
+            <div th:if="${#authentication.name != 'anonymousUser'}">
+                <span class="text-light me-3">Welcome, <span th:text="${#authentication.name}"></span></span>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-danger">Sign Out</button>
+                </form>
+            </div>
+            
+            <div th:if="${#authentication.name == 'anonymousUser'}">
+                <a href="/login" class="btn btn-outline-light">Login</a>
+            </div>
         </div>
     </nav>
     
     <div class="container mt-4">
         <h2 class="mb-3">Exploits</h2>
-        
-        <div class="mb-3">
-            <a href="/addexploit" class="btn btn-success">Post exploit</a>
+
+        <div th:if="${#authentication.name != 'anonymousUser'}">
+            <div class="mb-3">
+                <a href="/addexploit" class="btn btn-success">Post exploit</a>
+            </div>
         </div>
         
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
-                    <th>ID</th>
                     <th>Title</th>
                     <th>Date</th>
                     <th>Type</th>
                     <th>Platform</th>
-                    <th>Actions</th>
+                    <th>Author</th>
+                    <div th:if="${#authentication.name != 'anonymousUser'}">
+                        <th>Actions</th>
+                    </div>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="exploit : ${exploits}">
-                    <td th:text="${exploit.id}"></td>
                     <td><a th:href="@{'/exploit/' + ${exploit.id}}" th:text="${exploit.title}"></a></td>
                     <td th:text="${exploit.date}"></td>
-                    <td th:text="${exploit.type}"></td>
-                    <td th:text="${exploit.platform}"></td>
-                    <td><a th:href="@{'/exploit/' + ${exploit.id}}" class="btn btn-sm btn-primary">View</a></td>
+                    <td th:text="${exploit.type.typeName}"></td>
+                    <td th:text="${exploit.platform.platformName}"></td>
+                    <td th:text="${exploit.author}"></td>
+                    <td>
+                        <div th:if="${#authorization.expression('hasRole(''ADMIN'')') or #authentication.name == exploit.author}">
+                            <a th:href="@{'/editexploit/' + ${exploit.id}}" class="btn btn-sm btn-primary">Edit</a>
+                            <form th:action="@{'/delete-exploit/' + ${exploit.id}}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
