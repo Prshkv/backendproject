@@ -23,7 +23,7 @@ public class BackendprojectApplication {
 		return (args) -> {
 			
 			
-			platformRepository.deleteAll();
+			exploitRepository.deleteAll();
 
 		};
 	}
